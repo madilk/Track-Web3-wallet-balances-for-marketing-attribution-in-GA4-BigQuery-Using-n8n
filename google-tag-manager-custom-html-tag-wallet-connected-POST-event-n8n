@@ -1,0 +1,23 @@
+<script>
+  (function() {
+    // Reference the variables directly. No .split() needed!
+    var wallet = "{{DLV - Wallet Address}}";
+    var hashed = "{{JS - Hashed Wallet Address}}";
+    var cid = "{{Analytics Storage - Client ID}}";
+    var sid = "{{Analytics Storage - GA Session ID}}"; // Just the variable name
+
+    if (!wallet || wallet === "undefined") return;
+
+    fetch('https://scalo-labs-adil.app.n8n.cloud/webhook/wallet_ingest', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        "wallet_address": wallet,
+        "hashed_wallet_id": hashed,
+        "ga_client_id": cid,
+        "ga_session_id": sid
+      })
+    })
+    .then(function(res) { console.log('n8n response:', res.status); });
+  })();
+</script>
