@@ -1,0 +1,431 @@
+{
+    "exportFormatVersion": 2,
+    "exportTime": "2026-02-18 20:42:36",
+    "containerVersion": {
+        "path": "accounts/6330374244/containers/242143228/versions/4",
+        "accountId": "6330374244",
+        "containerId": "242143228",
+        "containerVersionId": "4",
+        "name": "n8n production",
+        "container": {
+            "path": "accounts/6330374244/containers/242143228",
+            "accountId": "6330374244",
+            "containerId": "242143228",
+            "name": "Scalo Labs Testing",
+            "publicId": "GTM-PH2CPCCT",
+            "usageContext": [
+                "WEB"
+            ],
+            "fingerprint": "1769683106288",
+            "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/6330374244/containers/242143228/workspaces?apiLink=container",
+            "features": {
+                "supportUserPermissions": true,
+                "supportEnvironments": true,
+                "supportWorkspaces": true,
+                "supportGtagConfigs": false,
+                "supportBuiltInVariables": true,
+                "supportClients": false,
+                "supportFolders": true,
+                "supportTags": true,
+                "supportTemplates": true,
+                "supportTriggers": true,
+                "supportVariables": true,
+                "supportVersions": true,
+                "supportZones": true,
+                "supportTransformations": false
+            },
+            "tagIds": [
+                "GTM-PH2CPCCT"
+            ]
+        },
+        "tag": [
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "tagId": "3",
+                "name": "Google Tag",
+                "type": "googtag",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "tagId",
+                        "value": "G-6ZRWY6SYN7"
+                    }
+                ],
+                "fingerprint": "1769684828086",
+                "firingTriggerId": [
+                    "2147479573"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "tagId": "4",
+                "name": "GA4 - All Events",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "{{Event}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1769687074340",
+                "firingTriggerId": [
+                    "2147479553"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "tagId": "11",
+                "name": "GA4 - Hashed Wallet Address",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "connect_wallet"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Measurement ID}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventSettingsVariable",
+                        "value": "{{Google Tag Event Settings - Hashed Wallet}}"
+                    }
+                ],
+                "fingerprint": "1769687594747",
+                "firingTriggerId": [
+                    "9"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "tagId": "13",
+                "name": "Custom HTML - Wallet Connected For n8n",
+                "type": "html",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "html",
+                        "value": "<script>\n  (function() {\n    // Reference the variables directly. No .split() needed!\n    var wallet = \"{{DLV - Wallet Address}}\";\n    var hashed = \"{{JS - Hashed Wallet Address}}\";\n    var cid = \"{{Analytics Storage - Client ID}}\";\n    var sid = \"{{Analytics Storage - GA Session ID}}\"; // Just the variable name\n\n    if (!wallet || wallet === \"undefined\") return;\n\n    fetch('https://scalo-labs-adil.app.n8n.cloud/webhook/wallet_ingest', {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify({\n        \"wallet_address\": wallet,\n        \"hashed_wallet_id\": hashed,\n        \"ga_client_id\": cid,\n        \"ga_session_id\": sid\n      })\n    })\n    .then(function(res) { console.log('n8n response:', res.status); });\n  })();\n</script>"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "supportDocumentWrite",
+                        "value": "false"
+                    }
+                ],
+                "fingerprint": "1770122150241",
+                "firingTriggerId": [
+                    "9"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            }
+        ],
+        "trigger": [
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "triggerId": "9",
+                "name": "Wallet Connected",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "wallet_connected"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1769687317664"
+            }
+        ],
+        "variable": [
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "variableId": "6",
+                "name": "JS - Hashed Wallet Address",
+                "type": "jsm",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "javascript",
+                        "value": "function() {\n  // 1. Get the raw address from your dataLayer variable\n  var rawWallet = {{DLV - Wallet Address}}; \n  if (!rawWallet) return undefined;\n\n  // 2. Normalize: Lowercase and trim (Crucial for consistent hashes)\n  var input = rawWallet.toLowerCase().trim();\n\n  // 3. SHA-256 Implementation (Self-contained for GTM)\n  function sha256(ascii) {\n    function r(n, v) { return (v >>> n) | (v << (32 - n)); }\n    var m = Math.pow, k = [], h = [], i, j, words = [], result = '',\n        asciiBitLength = ascii.length * 8;\n    var primeCounter = 0, isPrime = {};\n    for (var cand = 2; primeCounter < 64; cand++) {\n      if (!isPrime[cand]) {\n        for (i = 0; i < 313; i += cand) isPrime[i] = cand;\n        h[primeCounter] = (m(cand, 0.5) * 0x100000000) | 0;\n        k[primeCounter++] = (m(cand, 1 / 3) * 0x100000000) | 0;\n      }\n    }\n    ascii += '\\x80';\n    while (ascii.length % 64 - 56) ascii += '\\x00';\n    for (i = 0; i < ascii.length; i++) {\n      j = ascii.charCodeAt(i);\n      words[i >> 2] |= j << ((3 - i) % 4) * 8;\n    }\n    words[words.length] = ((asciiBitLength / 0x100000000) | 0);\n    words[words.length] = (asciiBitLength);\n    for (j = 0; j < words.length;) {\n      var w = words.slice(j, j += 16), oldH = h;\n      h = h.slice(0, 8);\n      for (i = 0; i < 64; i++) {\n        var w15 = w[i - 15], w2 = w[i - 2], a = h[0], e = h[4],\n            temp1 = h[7] + (r(6, e) ^ r(11, e) ^ r(25, e)) + ((e & h[5]) ^ ((~e) & h[6])) + k[i] + (w[i] = (i < 16) ? w[i] : (w[i - 16] + (r(7, w15) ^ r(18, w15) ^ (w15 >>> 3)) + w[i - 7] + (r(17, w2) ^ r(19, w2) ^ (w2 >>> 10))) | 0);\n        h = [(temp1 + ((r(2, a) ^ r(13, a) ^ r(22, a)) + ((a & h[1]) ^ (a & h[2]) ^ (h[1] & h[2])))) | 0].concat(h);\n        h[4] = (h[4] + temp1) | 0;\n      }\n      for (i = 0; i < 8; i++) h[i] = (h[i] + oldH[i]) | 0;\n    }\n    for (i = 0; i < 8; i++) {\n      for (j = 3; j + 1; j--) {\n        var b = (h[i] >> (j * 8)) & 255;\n        result += (b < 16 ? '0' : '') + b.toString(16);\n      }\n    }\n    return result;\n  }\n  return sha256(input);\n}"
+                    }
+                ],
+                "fingerprint": "1769686865765",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "variableId": "7",
+                "name": "DLV - Wallet Address",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "wallet_address"
+                    }
+                ],
+                "fingerprint": "1769686846076",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "variableId": "8",
+                "name": "Measurement ID",
+                "type": "c",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "value",
+                        "value": "G-6ZRWY6SYN7"
+                    }
+                ],
+                "fingerprint": "1769687053908",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "variableId": "10",
+                "name": "Google Tag Event Settings - Hashed Wallet",
+                "type": "gtes",
+                "parameter": [
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "page_location"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{Page Path}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "userProperties",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "name",
+                                        "value": "hashed_wallet_id"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "value",
+                                        "value": "{{JS - Hashed Wallet Address}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1769687565403"
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "variableId": "12",
+                "name": "CJS - GA Client ID",
+                "type": "jsm",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "javascript",
+                        "value": "function() {\n  try {\n    var tracker = ga.getAll()[0];\n    return tracker.get('clientId');\n  } catch(e) {\n    return \"anonymous\";\n  }\n}"
+                    }
+                ],
+                "fingerprint": "1769688972643",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "variableId": "14",
+                "name": "Analytics Storage - Client ID",
+                "type": "analytics_storage",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "dataField",
+                        "value": "client_id"
+                    }
+                ],
+                "fingerprint": "1769690105532",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "variableId": "15",
+                "name": "Analytics Storage - GA Session ID",
+                "type": "analytics_storage",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "dataField",
+                        "value": "session_id"
+                    }
+                ],
+                "fingerprint": "1769694649718",
+                "formatValue": {}
+            }
+        ],
+        "builtInVariable": [
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "type": "PAGE_URL",
+                "name": "Page URL"
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "type": "PAGE_HOSTNAME",
+                "name": "Page Hostname"
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "type": "PAGE_PATH",
+                "name": "Page Path"
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "type": "REFERRER",
+                "name": "Referrer"
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "type": "EVENT",
+                "name": "Event"
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "type": "CLICK_ELEMENT",
+                "name": "Click Element"
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "type": "CLICK_CLASSES",
+                "name": "Click Classes"
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "type": "CLICK_ID",
+                "name": "Click ID"
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "type": "CLICK_TARGET",
+                "name": "Click Target"
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "type": "CLICK_URL",
+                "name": "Click URL"
+            },
+            {
+                "accountId": "6330374244",
+                "containerId": "242143228",
+                "type": "CLICK_TEXT",
+                "name": "Click Text"
+            }
+        ],
+        "fingerprint": "1770122162913",
+        "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/6330374244/containers/242143228/versions/4?apiLink=version"
+    }
+}
