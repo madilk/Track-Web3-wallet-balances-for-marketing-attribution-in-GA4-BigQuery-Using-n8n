@@ -1,0 +1,50 @@
+function() {
+  // 1. Get the raw address from your dataLayer variable
+  var rawWallet = {{DLV - Wallet Address}}; 
+  if (!rawWallet) return undefined;
+
+  // 2. Normalize: Lowercase and trim (Crucial for consistent hashes)
+  var input = rawWallet.toLowerCase().trim();
+
+  // 3. SHA-256 Implementation (Self-contained for GTM)
+  function sha256(ascii) {
+    function r(n, v) { return (v >>> n) | (v << (32 - n)); }
+    var m = Math.pow, k = [], h = [], i, j, words = [], result = '',
+        asciiBitLength = ascii.length * 8;
+    var primeCounter = 0, isPrime = {};
+    for (var cand = 2; primeCounter < 64; cand++) {
+      if (!isPrime[cand]) {
+        for (i = 0; i < 313; i += cand) isPrime[i] = cand;
+        h[primeCounter] = (m(cand, 0.5) * 0x100000000) | 0;
+        k[primeCounter++] = (m(cand, 1 / 3) * 0x100000000) | 0;
+      }
+    }
+    ascii += '\x80';
+    while (ascii.length % 64 - 56) ascii += '\x00';
+    for (i = 0; i < ascii.length; i++) {
+      j = ascii.charCodeAt(i);
+      words[i >> 2] |= j << ((3 - i) % 4) * 8;
+    }
+    words[words.length] = ((asciiBitLength / 0x100000000) | 0);
+    words[words.length] = (asciiBitLength);
+    for (j = 0; j < words.length;) {
+      var w = words.slice(j, j += 16), oldH = h;
+      h = h.slice(0, 8);
+      for (i = 0; i < 64; i++) {
+        var w15 = w[i - 15], w2 = w[i - 2], a = h[0], e = h[4],
+            temp1 = h[7] + (r(6, e) ^ r(11, e) ^ r(25, e)) + ((e & h[5]) ^ ((~e) & h[6])) + k[i] + (w[i] = (i < 16) ? w[i] : (w[i - 16] + (r(7, w15) ^ r(18, w15) ^ (w15 >>> 3)) + w[i - 7] + (r(17, w2) ^ r(19, w2) ^ (w2 >>> 10))) | 0);
+        h = [(temp1 + ((r(2, a) ^ r(13, a) ^ r(22, a)) + ((a & h[1]) ^ (a & h[2]) ^ (h[1] & h[2])))) | 0].concat(h);
+        h[4] = (h[4] + temp1) | 0;
+      }
+      for (i = 0; i < 8; i++) h[i] = (h[i] + oldH[i]) | 0;
+    }
+    for (i = 0; i < 8; i++) {
+      for (j = 3; j + 1; j--) {
+        var b = (h[i] >> (j * 8)) & 255;
+        result += (b < 16 ? '0' : '') + b.toString(16);
+      }
+    }
+    return result;
+  }
+  return sha256(input);
+}
